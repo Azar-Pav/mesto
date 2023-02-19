@@ -1,12 +1,11 @@
 .header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  max-width: 1184px;
+  max-width: 880px;
+  margin: 0 auto 0;
+  padding: 45px/* 5.11363636363636% */ 0 40px;
+}
+
+@media all and (max-width: 425px) {
+  .header {
+    padding: 28px/* 8.75% */ 0 40px/* 42px */;
+  }
 }
