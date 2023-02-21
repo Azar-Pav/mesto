@@ -3,13 +3,13 @@
  padding: 0 0 41px/*4,65909090909091%*/;
 }
 
-@media all and (max-width: 880px) {
+@media all and (max-width: 916px) {
   .header__logo {
     padding: 0 0 41px/*4,65909090909091%*/ 19px/* 5.9375% */;
   }
 }
 
-@media all and (max-width: 425px) {
+@media all and (max-width: 570px) {
   .header__logo {
     width: 104px;
     height: 24px;
