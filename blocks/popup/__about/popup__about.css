@@ -1,0 +1,21 @@
+.popup__about {
+  color: #000;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  border: none;
+  outline: none;
+  border-bottom: 1px rgba(0, 0, 0, .2) solid;
+  margin: 0 0 48px;
+  padding: 0;
+  width: 83.3%;
+  height: 32px;
+}
+
+@media all and (max-width: 570px) {
+  .popup__about {
+    margin: 0 0 45px;
+  }
+}
