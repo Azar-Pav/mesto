@@ -17,5 +17,5 @@
 
 ## **Ссылка**
 
-* [Ссылка на проект в github.io]()
+* [Ссылка на проект в github.io](https://azar-pav.github.io/mesto/)
 
