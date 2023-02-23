@@ -19,7 +19,7 @@ function openForm() {
 }
 //Закрываем форму
 function closeForm() {
-  formElement.classList.remove('popup__opened');
+  formElement.classList.remove('popup_opened');
 }
 // Обработчик «отправки» формы
 function handleFormSubmit (evt) {
