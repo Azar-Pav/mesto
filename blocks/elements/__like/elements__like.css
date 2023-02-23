@@ -10,9 +10,6 @@
   -webkit-transition: opacity .3s linear;
   -o-transition: opacity .3s linear;
   transition: opacity .3s linear;
-  -webkit-transition: background-image .3s linear;
-  -o-transition: background-image .3s linear;
-  transition: background-image .3s linear;
   padding: 0;
 }
 
