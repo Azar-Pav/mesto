@@ -1,11 +1,11 @@
 .header__logo {
  margin: 0 auto 0 0;
- padding: 0 0 41px/*4,65909090909091%*/;
+ padding: 0 0 35px;
 }
 
 @media all and (max-width: 916px) {
   .header__logo {
-    padding: 0 0 41px/*4,65909090909091%*/ 19px/* 5.9375% */;
+    padding: 0 0 35px 19px;
   }
 }
 
@@ -13,6 +13,6 @@
   .header__logo {
     width: 104px;
     height: 24px;
-    padding: 0 0 31px/*9,6875%*/ 27px/* 8.4375% */;
+    padding: 0 0 27px 26px;
   }
 }

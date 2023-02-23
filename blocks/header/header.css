@@ -1,11 +1,11 @@
 .header {
   max-width: 880px;
   margin: 0 auto 0;
-  padding: 45px/* 5.11363636363636% */ 0 40px;
+  padding: 45px 0 40px;
 }
 
 @media all and (max-width: 570px) {
   .header {
-    padding: 28px/* 8.75% */ 0 40px/* 42px */;
+    padding: 28px 0 42px;
   }
 }
