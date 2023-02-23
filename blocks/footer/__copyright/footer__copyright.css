@@ -1,13 +1,11 @@
 .footer__copyright {
-  color: #fff;
+  color: #545454;
   font-family: Inter, Arial, Helvetica;
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;
   text-align: right;
   margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 @media all and (max-width: 676px) {

@@ -1,11 +1,15 @@
 .profile__about {
   color: #FFF;
-  font-family: 'Inter';
+  font-family: 'Inter', Arial, Helvetica;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
   margin: 0;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media all and (max-width: 768px) {
