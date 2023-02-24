@@ -5,17 +5,17 @@ let formElement = document.querySelector('.popup');
 let buttonEdit = sectionProfile.querySelector('.profile__edit-button');
 let buttonClose = formElement.querySelector('.popup__close-button');
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('.popup__name');
-let aboutInput = formElement.querySelector('.popup__about');
+let nameInput = formElement.querySelector('.popup__text-field[name="name"]');
+let aboutInput = formElement.querySelector('.popup__text-field[name="about"]');
 // Находим элементы, куда должны быть вставлены значения полей
 let profileName = sectionProfile.querySelector('.profile__name');
 let profileAbout = sectionProfile.querySelector('.profile__about');
-//текст profile__name и profile__about в форме
-nameInput.setAttribute('value', profileName.textContent);
-aboutInput.setAttribute('value', profileAbout.textContent);
 //Открываем форму
 function openForm() {
   formElement.classList.add('popup_opened');
+  //текст profile__name и profile__about в поле ввода
+  nameInput.value = profileName.textContent;
+  aboutInput.value = profileAbout.textContent;
 }
 //Закрываем форму
 function closeForm() {

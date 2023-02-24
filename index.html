@@ -9,7 +9,6 @@
 <body class="page">
   <header class="header">
     <img src="./images/header-logo.svg" alt="Место Россия" class="header__logo">
-    <div class="header__line"></div>
   </header>
   <main class="content">
     <section class="profile">
@@ -28,58 +27,62 @@
         <img src="./images/elements-image-tula.jpg" alt="Тула фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Тула</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img src="./images/elements-image-novgorod.jpg" alt="Нижний Новгород фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Нижний Новгород</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img src="./images/elements-image-penza.jpg" alt="Пенза фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Пенза</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img src="./images/elements-image-tula.jpg" alt="Тула фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Тула</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img src="./images/elements-image-novgorod.jpg" alt="Нижний Новгород фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Нижний Новгород</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
       <div class="elements__element">
         <img src="./images/elements-image-penza.jpg" alt="Пенза фото" class="elements__image">
         <div class="elements__items">
           <h2 class="elements__text">Пенза</h2>
-          <button class="elements__like" name="Нравится"></button>
+          <button class="elements__like" name="Нравится" type="button"></button>
         </div>
       </div>
     </section>
   </main>
-  <form class="popup">
-    <fieldset class="popup__container">
+  <div class="popup">
+    <div class="popup__container">
       <button class="popup__close-button" type="button" name="Закрыть"></button>
       <h2 class="popup__legend">Редактировать профиль</h2>
-      <input type="text" class="popup__name">
-      <input type="text" class="popup__about">
-      <button class="popup__save-button" type="submit" name="Сохранить изменения">Сохранить</button>
-    </fieldset>
-  </form>
+      <form name="editNameAbout" class="popup__edit-form">
+        <fieldset class="popup__edit">
+          <input type="text" class="popup__text-field" name="name">
+          <input type="text" class="popup__text-field" name="about">
+          <button class="popup__save-button" type="submit" name="saveChanges">Сохранить</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
   </footer>
-  <script src="./pages/index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>
