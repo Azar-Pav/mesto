@@ -1,25 +1,26 @@
 // Находим область профиля и форму в DOM
 let sectionProfile = document.querySelector('.profile');
-let formElement = document.querySelector('.popup');
+let popupElement = document.querySelector('.popup');
+let formElement = popupElement.querySelector('.popup__edit-form');
 // Находим кнопки редактирования в профиле и закрытия в форме
 let buttonEdit = sectionProfile.querySelector('.profile__edit-button');
-let buttonClose = formElement.querySelector('.popup__close-button');
+let buttonClose = popupElement.querySelector('.popup__close-button');
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('.popup__text-field[name="name"]');
-let aboutInput = formElement.querySelector('.popup__text-field[name="about"]');
+let nameInput = popupElement.querySelector('.popup__text-field[name="name"]');
+let aboutInput = popupElement.querySelector('.popup__text-field[name="about"]');
 // Находим элементы, куда должны быть вставлены значения полей
 let profileName = sectionProfile.querySelector('.profile__name');
 let profileAbout = sectionProfile.querySelector('.profile__about');
 //Открываем форму
 function openForm() {
-  formElement.classList.add('popup_opened');
+  popupElement.classList.add('popup_opened');
   //текст profile__name и profile__about в поле ввода
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
 }
 //Закрываем форму
 function closeForm() {
-  formElement.classList.remove('popup_opened');
+  popupElement.classList.remove('popup_opened');
 }
 // Обработчик «отправки» формы
 function handleFormSubmit (evt) {
