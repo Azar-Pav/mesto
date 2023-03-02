@@ -1,16 +1,21 @@
 // Находим область профиля и форму в DOM
-let sectionProfile = document.querySelector('.profile');
-let popupElement = document.querySelector('.popup');
-let formElement = popupElement.querySelector('.popup__edit-form');
+const sectionProfile = document.querySelector('.profile');
+const popupElement = document.querySelector('.popup');
+const formElement = popupElement.querySelector('.popup__edit-form');
 // Находим кнопки редактирования в профиле и закрытия в форме
-let buttonEdit = sectionProfile.querySelector('.profile__edit-button');
-let buttonClose = popupElement.querySelector('.popup__close-button');
+const buttonEdit = sectionProfile.querySelector('.profile__edit-button');
+const buttonClose = popupElement.querySelector('.popup__close-button');
 // Находим поля формы в DOM
-let nameInput = popupElement.querySelector('.popup__text-field[name="name"]');
-let aboutInput = popupElement.querySelector('.popup__text-field[name="about"]');
+const nameInput = popupElement.querySelector('.popup__text-field[name="name"]');
+const aboutInput = popupElement.querySelector('.popup__text-field[name="about"]');
 // Находим элементы, куда должны быть вставлены значения полей
-let profileName = sectionProfile.querySelector('.profile__name');
-let profileAbout = sectionProfile.querySelector('.profile__about');
+const profileName = sectionProfile.querySelector('.profile__name');
+const profileAbout = sectionProfile.querySelector('.profile__about');
+//Находим лайки
+const cardsLike = document.querySelectorAll('.elements .elements__like');
+//Находим картинки
+const cardsImg = document.querySelectorAll('.elements .elements__image');
+
 //Открываем форму
 function openForm() {
   popupElement.classList.add('popup_opened');
@@ -37,4 +42,8 @@ buttonClose.addEventListener('click', closeForm);
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', handleFormSubmit);
+//Добавляет обработчик событий к лайкам
+cardsLike.forEach(function (item) {
+  item.addEventListener('click', evt => evt.target.classList.toggle('elements__like_active'));
+});
 

@@ -7,9 +7,9 @@
   background-color: transparent;
   width: 22px;
   height: 19px;
-  -webkit-transition: opacity .3s linear;
-  -o-transition: opacity .3s linear;
-  transition: opacity .3s linear;
+  -webkit-transition: opacity .3s, background-image .3s linear;
+  -o-transition: opacity .3s, background-image .3s linear;
+  transition: opacity .3s, background-image .3s linear;
   padding: 0;
 }
 
@@ -18,7 +18,4 @@
   cursor: pointer;
 }
 
-.elements__like:active {
-  background-image: url(../../../images/elements-like-black.svg);
-}
 
