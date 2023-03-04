@@ -1,3 +1,30 @@
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+const elementContainer = document.querySelector('.elements');
 // Находим область профиля и форму в DOM
 const sectionProfile = document.querySelector('.profile');
 
@@ -18,14 +45,52 @@ const aboutInput = popupEdit.querySelector('.popup__text-field[name="about"]');
 // Находим элементы, куда должны быть вставлены значения полей
 const profileName = sectionProfile.querySelector('.profile__name');
 const profileAbout = sectionProfile.querySelector('.profile__about');
-const cards = document.querySelectorAll('.elements .elements__element')
-//Находим лайки
-const cardsLike = document.querySelectorAll('.elements .elements__like');
-//Находим картинки
-const cardsImg = document.querySelectorAll('.elements .elements__image');
-const cardsTxt = document.querySelectorAll('.elements .elements__text');
 const imageOpen = popupImage.querySelector('.popup__image');
 const textOpen = popupImage.querySelector('.popup__card-text');
+
+function renderCard() {
+  //Находим лайки, картинки, текст карточек
+  const cardsImg = document.querySelectorAll('.elements__image');
+  const cardsTxt = document.querySelectorAll('.elements__text');
+  const cardsLike = document.querySelectorAll('.elements__like');
+  //Даём картинкам карточкек обработчики событий для открытия вспл. окна
+  cardsImg.forEach(function (item, index) {
+  item.addEventListener('click', function () {
+    popupImage.classList.add('popup_opened');
+    //Получаем ссылку на изображение
+    const imgAttribute = item.getAttribute('src');
+    //Получаем текст карточки, где выбрано изображение
+    const cardText = cardsTxt[index].textContent;
+    //Передаём в вспл.окно ссылку на изобр.
+    imageOpen.setAttribute('src', imgAttribute);
+    //Передаём в вспл.окно текст
+    textOpen.textContent = cardText;
+  });
+});
+//Добавляет обработчик события (добавление класса при клике) к лайкам
+cardsLike.forEach(function (item) {
+  item.addEventListener('click', evt => evt.target.classList.toggle('elements__like_active'));
+});
+};
+
+function createCard(cardArray) {
+
+  const cardTemplate = document.querySelector('#card').content;
+  const cardClone = cardTemplate.querySelector('.elements__element').cloneNode(true);
+  const cardAbout = cardClone.querySelector('.elements__text');
+  const cardImage = cardClone.querySelector('.elements__image');
+  cardAbout.textContent = cardArray.name;
+  cardImage.setAttribute('src', cardArray.link);
+  cardImage.setAttribute('alt', cardArray.name);
+  renderCard();
+  return cardClone
+}
+
+initialCards.forEach(function (item) {
+  const card = createCard(item);
+  elementContainer.prepend(card);
+});
+
 //Открываем формы
 function openFormEdit() {
   popupEdit.classList.add('popup_opened');
@@ -55,29 +120,10 @@ function handleFormSubmit (evt) {
 }
 //Обработчики открытия и закрытия формы
 buttonEdit.addEventListener('click', openFormEdit);
-
-cardsImg.forEach(function (item, index) {
-  item.addEventListener('click', function () {
-    popupImage.classList.add('popup_opened');
-
-    const imgAttribute = item.getAttribute('src');
-
-    const cardText = cardsTxt[index].textContent;
-
-    imageOpen.setAttribute('src', imgAttribute);
-
-    textOpen.textContent = cardText;
-  });
-});
-
 buttonCloseEdit.addEventListener('click', closeFormEdit);
 buttonCloseImage.addEventListener('click', closeImage);
 //buttonCloseEdit.addEventListener('click', closeFormEdit);
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', handleFormSubmit);
-//Добавляет обработчик события (добавление класса при клике) к лайкам
-cardsLike.forEach(function (item) {
-  item.addEventListener('click', evt => evt.target.classList.toggle('elements__like_active'));
-});
 
