@@ -30,18 +30,21 @@ const sectionProfile = document.querySelector('.profile');
 
 const popupEdit = document.querySelector('.popup_type-js_edit');
 const popupImage = document.querySelector('.popup_type-js_image');
-//const popupAdd = document.querySelector('.popup_type-js_add');
+const popupAdd = document.querySelector('.popup_type-js_add');
 
 const formElement = popupEdit.querySelector('.popup__edit-form');
-//const formElementAdd = popupAdd.querySelector('.popup__edit-form');
+const formElementAdd = popupAdd.querySelector('.popup__edit-form');
 // Находим кнопки редактирования в профиле и закрытия в форме
 const buttonEdit = sectionProfile.querySelector('.profile__edit-button');
+const buttonAdd = sectionProfile.querySelector('.profile__add-button');
 const buttonCloseEdit = popupEdit.querySelector('.popup__close-button');
 const buttonCloseImage = popupImage.querySelector('.popup__close-button');
-//const buttonCloseAdd = popupEdit.querySelector('.popup__close-button');
+const buttonCloseAdd = popupAdd.querySelector('.popup__close-button');
 // Находим поля формы в DOM
 const nameInput = popupEdit.querySelector('.popup__text-field[name="name"]');
 const aboutInput = popupEdit.querySelector('.popup__text-field[name="about"]');
+const namingInput = popupAdd.querySelector('.popup__text-field[name="naming"]');
+const linkInput = popupAdd.querySelector('.popup__text-field[name="link"]');
 // Находим элементы, куда должны быть вставлены значения полей
 const profileName = sectionProfile.querySelector('.profile__name');
 const profileAbout = sectionProfile.querySelector('.profile__about');
@@ -74,7 +77,6 @@ cardsLike.forEach(function (item) {
 };
 
 function createCard(cardArray) {
-
   const cardTemplate = document.querySelector('#card').content;
   const cardClone = cardTemplate.querySelector('.elements__element').cloneNode(true);
   const cardAbout = cardClone.querySelector('.elements__text');
@@ -82,7 +84,6 @@ function createCard(cardArray) {
   cardAbout.textContent = cardArray.name;
   cardImage.setAttribute('src', cardArray.link);
   cardImage.setAttribute('alt', cardArray.name);
-  renderCard();
   return cardClone
 }
 
@@ -90,7 +91,7 @@ initialCards.forEach(function (item) {
   const card = createCard(item);
   elementContainer.prepend(card);
 });
-
+renderCard();
 //Открываем формы
 function openFormEdit() {
   popupEdit.classList.add('popup_opened');
@@ -98,13 +99,18 @@ function openFormEdit() {
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
 }
+function openFormAdd() {
+  popupAdd.classList.add('popup_opened');
+}
 
 
 //Закрываем формы
 function closeFormEdit() {
   popupEdit.classList.remove('popup_opened');
 }
-
+function closeFormAdd() {
+  popupAdd.classList.remove('popup_opened');
+}
 function closeImage() {
   popupImage.classList.remove('popup_opened');
 }
@@ -118,12 +124,27 @@ function handleFormSubmit (evt) {
   profileAbout.textContent = aboutInput.value;
   closeFormEdit();
 }
+function handleFormSubmitAdd (evt) {
+  evt.preventDefault();
+  const formArr = [ {
+    name: '',
+    link: ''
+  } ];
+  formArr.name = namingInput.value;
+  formArr.link = linkInput.value;
+  const formCard = createCard(formArr);
+  elementContainer.prepend(formCard);
+  renderCard();
+  closeFormAdd();
+}
 //Обработчики открытия и закрытия формы
 buttonEdit.addEventListener('click', openFormEdit);
+buttonAdd.addEventListener('click', openFormAdd);
 buttonCloseEdit.addEventListener('click', closeFormEdit);
 buttonCloseImage.addEventListener('click', closeImage);
-//buttonCloseEdit.addEventListener('click', closeFormEdit);
+buttonCloseAdd.addEventListener('click', closeFormAdd);
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', handleFormSubmit);
+formElementAdd.addEventListener('submit', handleFormSubmitAdd);
 

@@ -13,3 +13,16 @@
   width: 100%;
   min-height: 32px;
 }
+
+.popup__text-field::placeholder {
+  color: #C4C4C4;
+}
+.popup__text-field::-moz-placeholder {
+  color: #C4C4C4;
+}
+.popup__text-field:-moz-placeholder {
+  color: #C4C4C4;
+}
+.popup__text-field:-ms-input-placeholder {
+  color: #C4C4C4;
+}
