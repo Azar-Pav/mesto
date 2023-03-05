@@ -1,29 +1,3 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 // Находим область профиля и контейнер карточек
 const elementContainer = document.querySelector('.elements');
 const sectionProfile = document.querySelector('.profile');
@@ -93,7 +67,6 @@ initialCards.forEach(function (item) {
   const card = assembleCard(item);
   elementContainer.prepend(card);
 });
-//setCardListeners();
 
 //Открываем формы
 function openPopup(popup) {
@@ -127,7 +100,6 @@ function handleFormSubmitAdd (evt) {
   formObj.link = linkInput.value;
   const formCard = assembleCard(formObj);
   elementContainer.prepend(formCard);
-  //setCardListeners();
   closePopup(evt);
   namingInput.value = '';
   linkInput.value = '';
