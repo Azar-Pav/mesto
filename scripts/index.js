@@ -12,7 +12,9 @@ const formElementAdd = popupAdd.querySelector('.popup__edit-form');
 const buttonEdit = sectionProfile.querySelector('.profile__edit-button');
 const buttonAdd = sectionProfile.querySelector('.profile__add-button');
 // Находим кнопки закрытия в формах
-const buttonClose = document.querySelectorAll('.popup__close-button');
+const buttonCloseEdit = popupEdit.querySelector('.popup__close-button');
+const buttonCloseAdd = popupAdd.querySelector('.popup__close-button');
+const buttonCloseImage = popupImage.querySelector('.popup__close-button');
 // Находим поля форм в DOM
 const nameInput = popupEdit.querySelector('.popup__text-field[name="name"]');
 const aboutInput = popupEdit.querySelector('.popup__text-field[name="about"]');
@@ -80,8 +82,8 @@ function openFormEdit() {
 }
 
 //Закрываем формы
-function closePopup(evt) {
-  evt.target.closest('.popup').classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 // Обработчики «отправки» формы
@@ -108,9 +110,9 @@ function handleFormSubmitAdd (evt) {
 //Обработчики открытия и закрытия формы
 buttonEdit.addEventListener('click', openFormEdit);
 buttonAdd.addEventListener('click', open => openPopup(popupAdd));
-buttonClose.forEach(function (item) {
-  item.addEventListener('click', closePopup);
-});
+buttonCloseEdit.addEventListener('click', close => closePopup(popupEdit));
+buttonCloseAdd.addEventListener('click', close => closePopup(popupAdd));
+buttonCloseImage.addEventListener('click', close => closePopup(popupImage));
 // Прикрепляем обработчики к формам:
 // он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', handleFormSubmitEdit);
