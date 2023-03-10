@@ -93,7 +93,7 @@ function handleFormSubmitEdit (evt) {
   // Вставьте новые значения с помощью textContent
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  closePopup(evt);
+  closePopup(popupEdit);
 }
 function handleFormSubmitAdd (evt) {
   evt.preventDefault();
@@ -102,7 +102,7 @@ function handleFormSubmitAdd (evt) {
   formObj.link = linkInput.value;
   const formCard = assembleCard(formObj);
   elementContainer.prepend(formCard);
-  closePopup(evt);
+  closePopup(popupAdd);
   namingInput.value = '';
   linkInput.value = '';
 }
