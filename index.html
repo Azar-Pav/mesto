@@ -22,18 +22,34 @@
       </div>
       <button class="profile__add-button" type="button" name="Добавить"></button>
     </section>
-    <section class="elements">
+    <section>
+      <ul class="elements">
 
+      </ul>
     </section>
   </main>
   <div class="popup popup_type-js_edit">
     <div class="popup__container">
       <button class="popup__close-button" type="button" name="Закрыть"></button>
       <h2 class="popup__legend">Редактировать профиль</h2>
-      <form name="editNameAbout" class="popup__edit-form">
+      <form name="editNameAbout" class="popup__edit-form" novalidate>
         <fieldset class="popup__edit">
-          <input type="text" class="popup__text-field" name="name" placeholder="Имя профиля">
-          <input type="text" class="popup__text-field" name="about" placeholder="О себе">
+          <input
+            type="text"
+            class="popup__text-field"
+            id="input-name"
+            name="name"
+            placeholder="Имя профиля"
+            required minlength="2" maxlength="40">
+          <span class="input-name-error"></span>
+          <input
+            type="text"
+            class="popup__text-field"
+            id="input-about"
+            name="about"
+            placeholder="О себе"
+            required minlength="2" maxlength="200">
+          <span class="input-about-error"></span>
           <button class="popup__save-button" type="submit" name="saveChanges">Сохранить</button>
         </fieldset>
       </form>
@@ -43,10 +59,24 @@
     <div class="popup__container">
       <button class="popup__close-button" type="button" name="Закрыть"></button>
       <h2 class="popup__legend">Новое место</h2>
-      <form name="addNamingLink" class="popup__edit-form">
+      <form name="addNamedLink" class="popup__edit-form" novalidate>
         <fieldset class="popup__edit">
-          <input type="text" class="popup__text-field" name="naming" placeholder="Название">
-          <input type="text" class="popup__text-field" name="link" placeholder="Ссылка на картинку">
+          <input
+            type="text"
+            class="popup__text-field"
+            id="input-named"
+            name="named"
+            placeholder="Название"
+            required minlength="2" maxlength="30">
+          <span class="input-named-error"></span>
+          <input
+            type="url"
+            class="popup__text-field"
+            id="input-link"
+            name="link"
+            placeholder="Ссылка на картинку"
+            required>
+          <span class="input-link-error"></span>
           <button class="popup__save-button" type="submit" name="saveChanges">Сохранить</button>
         </fieldset>
       </form>
@@ -60,19 +90,20 @@
     </div>
   </div>
   <template id="card">
-    <div class="elements__element">
+    <li class="elements__element">
       <img src="#" alt="#" class="elements__image">
       <button class="elements__delete" aria-label="Удалить" type="button"></button>
       <div class="elements__items">
         <h2 class="elements__text"></h2>
         <button class="elements__like" aria-label="Нравится" type="button"></button>
       </div>
-    </div>
+    </li>
   </template>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
   </footer>
   <script src="./scripts/indexData.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>

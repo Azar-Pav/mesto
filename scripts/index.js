@@ -18,7 +18,7 @@ const buttonCloseImage = popupImage.querySelector('.popup__close-button');
 // Находим поля форм в DOM
 const nameInput = popupEdit.querySelector('.popup__text-field[name="name"]');
 const aboutInput = popupEdit.querySelector('.popup__text-field[name="about"]');
-const namingInput = popupAdd.querySelector('.popup__text-field[name="naming"]');
+const namedInput = popupAdd.querySelector('.popup__text-field[name="named"]');
 const linkInput = popupAdd.querySelector('.popup__text-field[name="link"]');
 // Находим элементы, куда должны быть вставлены значения полей
 const profileName = sectionProfile.querySelector('.profile__name');
@@ -98,12 +98,12 @@ function handleFormSubmitEdit (evt) {
 function handleFormSubmitAdd (evt) {
   evt.preventDefault();
   const formObj = {};
-  formObj.name = namingInput.value;
+  formObj.name = namedInput.value;
   formObj.link = linkInput.value;
   const formCard = assembleCard(formObj);
   elementContainer.prepend(formCard);
   closePopup(popupAdd);
-  namingInput.value = '';
+  namedInput.value = '';
   linkInput.value = '';
 }
 
