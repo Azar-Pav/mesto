@@ -1,17 +1,18 @@
+//Показываем ошибку
 const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass, error}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}${error}`);
   inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
 };
-
+//Скрываем ошибку
 const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass , error}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}${error}`);
   inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
   errorElement.textContent = '';
 };
-
+//Определяем отображение ошибки
 const checkInputValidity = (formElement, inputElement, config) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, config);
@@ -20,6 +21,7 @@ const checkInputValidity = (formElement, inputElement, config) => {
     hideInputError(formElement, inputElement, config);
   }
 };
+//Переключаем состояние кнопки
 const toggleButtonState = (inputList, buttonElement, {inactiveButtonClass}) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
@@ -29,11 +31,13 @@ const toggleButtonState = (inputList, buttonElement, {inactiveButtonClass}) => {
     buttonElement.removeAttribute('disabled', true);
   }
 };
+//Проверям корректность всех данных в форме
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.checkValidity()
   });
 };
+//Добавляем обработчики событий инпутам и кнопке в форме
 const setEventListeners = (formElement, {inputSelector, submitButtonSelector, ...config}) => {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
@@ -45,7 +49,7 @@ const setEventListeners = (formElement, {inputSelector, submitButtonSelector, ..
     });
   });
 };
-
+//Добавляем всем формам обработчики событий
 const enableValidation = ({formSelector, fieldsetSelector, ...config}) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
