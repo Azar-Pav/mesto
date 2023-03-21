@@ -69,74 +69,50 @@ initialCards.forEach(function (item) {
   const card = assembleCard(item);
   elementContainer.prepend(card);
 });
-//Перепроверка валидности
-function reloadValidation(popup, {formSelector, inputSelector, submitButtonSelector, ...config}) {
-  const formElement = popup.querySelector(formSelector);
-  const buttonElement = formElement.querySelector(submitButtonSelector);
-  const inputSelectors = formElement.querySelectorAll(inputSelector);
-  const inputList = Array.from(inputSelectors);
-  inputList.forEach((inputElement) => {
-    checkInputValidity(formElement, inputElement, config);
-    hideInputError(formElement, inputElement, config);
-  });
-  toggleButtonState(inputList, buttonElement, config)
-};
 //Закрываем формы
-function closePopup() {
-  const popupOpened = document.querySelector('.popup_opened');
-  popupOpened.classList.remove('popup_opened');
-  removeCloseEvents();
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  removeCloseByEsc();
 }
 //Закрытие на esc
-function keyPopClose(evt) {
+function closeByEsc(evt) {
   if (evt.key === 'Escape') {
-    closePopup();
+    closePopup(document.querySelector('.popup_opened'));
   };
+};
+//Установка слушателя закрытия на esc
+function addCloseByEsc() {
+  document.addEventListener('keydown', closeByEsc);
+};
+//Удаление слушателя закрытия на esc
+function removeCloseByEsc() {
+  document.removeEventListener('keydown', closeByEsc);
 };
 //Закрытие по нажатию на оверлей вспл.окна
-function mousePopClose(evt) {
+function closeByOverlayClick(evt) {
   if (evt.target.classList.contains('popup')) {
-    closePopup();
+    closePopup(evt.target);
   };
-};
-//Установка слушателей закрытия вспл. окна
-function setCloseEvents() {
-  document.addEventListener('keydown', keyPopClose);
-  popups.forEach((element) => {
-    element.addEventListener('mousedown', mousePopClose);
-  });
-  buttonsClose.forEach((element) => {
-    element.addEventListener('click', closePopup);
-  });
-};
-//Удаление слушателей закрытия вспл. окна
-function removeCloseEvents() {
-  document.removeEventListener('keydown', keyPopClose);
-  popups.forEach((element) => {
-    element.removeEventListener('mousedown', mousePopClose);
-  });
-  buttonsClose.forEach((element) => {
-    element.removeEventListener('click', closePopup);
-  });
 };
 
 //Открываем формы
 function openPopup(popup) {
-  const form = popup.querySelector('.popup__edit-form');
-  if (form) {
-    form.reset();
-    reloadValidation(popup, validationConfig);
-  };
   popup.classList.add('popup_opened');
-  setCloseEvents();
+  addCloseByEsc();
 };
 
 function openFormEdit() {
-  openPopup(popupEdit);
   //текст profile__name и profile__about в поле ввода
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
   reloadValidation(popupEdit, validationConfig);
+  openPopup(popupEdit);
+};
+
+function openFormAdd() {
+  formElementAdd.reset();
+  reloadValidation(popupAdd, validationConfig);
+  openPopup(popupAdd);
 };
 
 // Обработчики «отправки» формы
@@ -146,7 +122,7 @@ function handleFormSubmitEdit (evt) {
   // Вставьте новые значения с помощью textContent
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  closePopup();
+  closePopup(popupEdit);
 };
 
 function handleFormSubmitAdd (evt) {
@@ -156,14 +132,22 @@ function handleFormSubmitAdd (evt) {
   cardData.link = linkInput.value;
   const formCard = assembleCard(cardData);
   elementContainer.prepend(formCard);
-  closePopup();
+  formElementAdd.reset();
+  closePopup(popupAdd);
 };
 
 //Открываем формы
 buttonEdit.addEventListener('click', openFormEdit);
-buttonAdd.addEventListener('click', open => openPopup(popupAdd));
+buttonAdd.addEventListener('click', openFormAdd);
 // Прикрепляем обработчики к формам:
 // он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', handleFormSubmitEdit);
 formElementAdd.addEventListener('submit', handleFormSubmitAdd);
-
+//Обрабочики закрытия по нажатию на оверлей вспл.окна
+popups.forEach((element) => {
+  element.addEventListener('mousedown', closeByOverlayClick);
+});
+//Обработчики закрытия кнопки закрытия вспл.окна
+buttonsClose.forEach((element) => {
+  element.addEventListener('click', close => closePopup(document.querySelector('.popup_opened')));
+});

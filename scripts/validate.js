@@ -55,7 +55,18 @@ const enableValidation = ({formSelector, fieldsetSelector, ...config}) => {
     setEventListeners(formElement, config);
     });
   };
-
+//Перепроверка валидности
+function reloadValidation(popup, {formSelector, inputSelector, submitButtonSelector, ...config}) {
+  const formElement = popup.querySelector(formSelector);
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+  const inputSelectors = formElement.querySelectorAll(inputSelector);
+  const inputList = Array.from(inputSelectors);
+  inputList.forEach((inputElement) => {
+    checkInputValidity(formElement, inputElement, config);
+    hideInputError(formElement, inputElement, config);
+  });
+  toggleButtonState(inputList, buttonElement, config)
+};
 const validationConfig = {
   formSelector: '.popup__edit-form',
   inputSelector: '.popup__text-field',
