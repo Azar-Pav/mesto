@@ -4,8 +4,10 @@
   font-family: 'Inter', Arial, Helvetica;
   font-weight: 400;
   font-size: 12px;
-  line-height: 1.25;
+  line-height: 1;
   color: #FF0000;
   min-height: 24px;
   width: 100%;
+  display: block;
+  white-space: pre-wrap;
 }
