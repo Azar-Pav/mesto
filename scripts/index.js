@@ -105,13 +105,13 @@ function openFormEdit() {
   //текст profile__name и profile__about в поле ввода
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
-  reloadValidation(popupEdit, validationConfig);
+  formProfileValidation.reloadValidation();
   openPopup(popupEdit);
 };
 
 function openFormAdd() {
   formElementAdd.reset();
-  reloadValidation(popupAdd, validationConfig);
+  formAddValidation.reloadValidation();
   openPopup(popupAdd);
 };
 
@@ -151,3 +151,19 @@ popups.forEach((element) => {
 buttonsClose.forEach((element) => {
   element.addEventListener('click', close => closePopup(document.querySelector('.popup_opened')));
 });
+
+const validationConfig = {
+  formSelector: '.popup__edit-form',
+  inputSelector: '.popup__text-field',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__text-field_type_error',
+  errorClass: 'popup__input-error',
+  error: '-error',
+};
+
+const formProfileValidation = new FormValidator(validationConfig, popupEdit);
+formProfileValidation.setEventListeners();
+const formAddValidation = new FormValidator(validationConfig, popupAdd);
+formAddValidation.setEventListeners();
+
