@@ -1,13 +1,10 @@
-import {initialCards, validationConfig} from './indexData.js';
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
-
-// Находим область профиля
+// Находим область профиля и контейнер карточек
+const elementContainer = document.querySelector('.elements');
 const sectionProfile = document.querySelector('.profile');
 // Находим вспл.окна
 const popupEdit = document.querySelector('.popup_type-js_edit');
+const popupImage = document.querySelector('.popup_type-js_image');
 const popupAdd = document.querySelector('.popup_type-js_add');
-export const popupImage = document.querySelector('.popup_type-js_image');
 // Находим формы в вспл.окнах
 const formElementProfile = popupEdit.querySelector('.popup__edit-form');
 const formElementAdd = popupAdd.querySelector('.popup__edit-form');
@@ -22,19 +19,18 @@ const linkInput = popupAdd.querySelector('.popup__text-field[name="link"]');
 // Находим элементы, куда должны быть вставлены значения полей
 const profileName = sectionProfile.querySelector('.profile__name');
 const profileAbout = sectionProfile.querySelector('.profile__about');
-export const imageOpen = popupImage.querySelector('.popup__image');
-export const textOpen = popupImage.querySelector('.popup__card-text');
+const imageOpen = popupImage.querySelector('.popup__image');
+const textOpen = popupImage.querySelector('.popup__card-text');
 //Находим шаблон карточки
  const cardTemplate = document.querySelector('#card').content;
 //Находим окна и кнопки закрытия
 const popups = document.querySelectorAll('.popup');
 const buttonsClose = document.querySelectorAll('.popup__close-button');
-
 const formProfileValidation = new FormValidator(validationConfig, popupEdit);
 formProfileValidation.enableValidation();
 const formAddValidation = new FormValidator(validationConfig, popupAdd);
 formAddValidation.enableValidation();
-const loadCards = new Card(initialCards, cardTemplate);
+const loadCards = new CardAssembler(initialCards, cardTemplate);
 loadCards.addCards();
 //Закрываем формы
 function closePopup(popup) {
@@ -63,7 +59,7 @@ function closeByOverlayClick(evt) {
 };
 
 //Открываем формы
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
   addCloseByEsc();
 };
@@ -97,7 +93,7 @@ function handleFormSubmitAdd (evt) {
   const cardData = {};
   cardData.name = namedInput.value;
   cardData.link = linkInput.value;
-  const createCard = new Card(cardData, cardTemplate);
+  const createCard = new CardAssembler(cardData, cardTemplate);
   createCard.addCards();
   formElementAdd.reset();
   closePopup(popupAdd);
