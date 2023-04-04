@@ -50,7 +50,7 @@ class FormValidator {
     });
   };
   //Добавляем обработчики событий инпутам и кнопке в форме
-  setEventListeners = () => {
+  enableValidation = () => {
     const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {

@@ -26,49 +26,12 @@ const textOpen = popupImage.querySelector('.popup__card-text');
 //Находим окна и кнопки закрытия
 const popups = document.querySelectorAll('.popup');
 const buttonsClose = document.querySelectorAll('.popup__close-button');
-//Создаём функцию слушателей карточек
-function setCardListeners(item) {
-  //Находим лайки, картинки, текст карточек, корзину
-  const cardsImg = item.querySelector('.elements__image');
-  const cardsTxt = item.querySelector('.elements__text');
-  const cardsLike = item.querySelector('.elements__like');
-  const cardsDelete = item.querySelector('.elements__delete');
-  //Даём картинкам карточкек обработчики событий для открытия вспл. окна
-  cardsImg.addEventListener('click', function () {
-    openPopup(popupImage);
-    //Получаем ссылку на изображение
-    const imgAttribute = cardsImg.getAttribute('src');
-    //Получаем текст карточки, где выбрано изображение
-    const cardText = cardsTxt.textContent;
-    //Передаём в вспл.окно ссылку и alt на изобр.
-    imageOpen.setAttribute('src', imgAttribute);
-    imageOpen.setAttribute('alt', cardText);
-    //Передаём в вспл.окно текст
-    textOpen.textContent = cardText;
-  });
-
-  //Добавляет обработчик события (удаление карточки) к корзине
-  cardsDelete.addEventListener('click', evt => evt.target.closest('.elements__element').remove());
-
-  //Добавляет обработчик события (добавление класса при клике) к лайкам
-  cardsLike.addEventListener('click', evt => evt.target.classList.toggle('elements__like_active'));
-};
-//Создаём функцию сборки карточки
-function assembleCard(cardData) {
-  const cardClone = cardTemplate.querySelector('.elements__element').cloneNode(true);
-  const cardAbout = cardClone.querySelector('.elements__text');
-  const cardImage = cardClone.querySelector('.elements__image');
-  cardAbout.textContent = cardData.name;
-  cardImage.setAttribute('src', cardData.link);
-  cardImage.setAttribute('alt', cardData.name);
-  setCardListeners(cardClone);
-  return cardClone
-}
-//Добавляем начальные карточки
-initialCards.forEach(function (item) {
-  const card = assembleCard(item);
-  elementContainer.prepend(card);
-});
+const formProfileValidation = new FormValidator(validationConfig, popupEdit);
+formProfileValidation.enableValidation();
+const formAddValidation = new FormValidator(validationConfig, popupAdd);
+formAddValidation.enableValidation();
+const loadCards = new CardAssembler(initialCards, cardTemplate);
+loadCards.addCards();
 //Закрываем формы
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -130,8 +93,8 @@ function handleFormSubmitAdd (evt) {
   const cardData = {};
   cardData.name = namedInput.value;
   cardData.link = linkInput.value;
-  const formCard = assembleCard(cardData);
-  elementContainer.prepend(formCard);
+  const createCard = new CardAssembler(cardData, cardTemplate);
+  createCard.addCards();
   formElementAdd.reset();
   closePopup(popupAdd);
 };
@@ -152,18 +115,6 @@ buttonsClose.forEach((element) => {
   element.addEventListener('click', close => closePopup(document.querySelector('.popup_opened')));
 });
 
-const validationConfig = {
-  formSelector: '.popup__edit-form',
-  inputSelector: '.popup__text-field',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__text-field_type_error',
-  errorClass: 'popup__input-error',
-  error: '-error',
-};
 
-const formProfileValidation = new FormValidator(validationConfig, popupEdit);
-formProfileValidation.setEventListeners();
-const formAddValidation = new FormValidator(validationConfig, popupAdd);
-formAddValidation.setEventListeners();
+
 
