@@ -1,4 +1,8 @@
-class CardAssembler {
+import { popupImage,imageOpen,textOpen,openPopup } from "./index.js";
+
+const elementContainer = document.querySelector('.elements');
+
+export class Card {
   constructor (cardData, cardTemplate) {
     this._cardTemplate = cardTemplate;
     this._cardData = cardData;
@@ -33,7 +37,6 @@ class CardAssembler {
  //Создаём функцию сборки карточки
  _assembleCard(name, link) {
    const cardClone = this._cardTemplate.querySelector('.elements__element').cloneNode(true);
-   console.log(cardClone);
    const cardAbout = cardClone.querySelector('.elements__text');
    const cardImage = cardClone.querySelector('.elements__image');
    cardAbout.textContent = name;
