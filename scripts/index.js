@@ -2,12 +2,13 @@ import {initialCards, validationConfig} from './indexData.js';
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 
-// Находим область профиля
+// Находим область профиля  и карточек
 const sectionProfile = document.querySelector('.profile');
+const elementContainer = document.querySelector('.elements');
 // Находим вспл.окна
 const popupEdit = document.querySelector('.popup_type-js_edit');
 const popupAdd = document.querySelector('.popup_type-js_add');
-export const popupImage = document.querySelector('.popup_type-js_image');
+const popupImage = document.querySelector('.popup_type-js_image');
 // Находим формы в вспл.окнах
 const formElementProfile = popupEdit.querySelector('.popup__edit-form');
 const formElementAdd = popupAdd.querySelector('.popup__edit-form');
@@ -22,8 +23,8 @@ const linkInput = popupAdd.querySelector('.popup__text-field[name="link"]');
 // Находим элементы, куда должны быть вставлены значения полей
 const profileName = sectionProfile.querySelector('.profile__name');
 const profileAbout = sectionProfile.querySelector('.profile__about');
-export const imageOpen = popupImage.querySelector('.popup__image');
-export const textOpen = popupImage.querySelector('.popup__card-text');
+const imageOpen = popupImage.querySelector('.popup__image');
+const textOpen = popupImage.querySelector('.popup__card-text');
 //Находим шаблон карточки
  const cardTemplate = document.querySelector('#card').content;
 //Находим окна и кнопки закрытия
@@ -34,8 +35,15 @@ const formProfileValidation = new FormValidator(validationConfig, popupEdit);
 formProfileValidation.enableValidation();
 const formAddValidation = new FormValidator(validationConfig, popupAdd);
 formAddValidation.enableValidation();
-const loadCards = new Card(initialCards, cardTemplate);
-loadCards.addCards();
+
+initialCards.forEach( item => addCard(item));
+
+function addCard(cardData) {
+    const newCard = new Card(cardData, cardTemplate, openImage);
+    const card = newCard.assembleCard();
+    elementContainer.prepend(card);
+  }
+
 //Закрываем формы
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -82,6 +90,21 @@ function openFormAdd() {
   openPopup(popupAdd);
 };
 
+function openImage(cardElement) {
+  openPopup(popupImage);
+  const cardsImg = cardElement.querySelector('.elements__image');
+  const cardsTxt = cardElement.querySelector('.elements__text');
+  //Получаем ссылку на изображение
+  const imgAttribute = cardsImg.getAttribute('src');
+  //Получаем текст карточки, где выбрано изображение
+  const cardText = cardsTxt.textContent;
+  //Передаём в вспл.окно ссылку и alt на изобр.
+  imageOpen.setAttribute('src', imgAttribute);
+  imageOpen.setAttribute('alt', cardText);
+  //Передаём в вспл.окно текст
+  textOpen.textContent = cardText;
+}
+
 // Обработчики «отправки» формы
 function handleFormSubmitEdit (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -97,8 +120,7 @@ function handleFormSubmitAdd (evt) {
   const cardData = {};
   cardData.name = namedInput.value;
   cardData.link = linkInput.value;
-  const createCard = new Card(cardData, cardTemplate);
-  createCard.addCards();
+  addCard(cardData);
   formElementAdd.reset();
   closePopup(popupAdd);
 };

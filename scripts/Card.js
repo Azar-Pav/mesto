@@ -1,63 +1,50 @@
-import { popupImage,imageOpen,textOpen,openPopup } from "./index.js";
-
-const elementContainer = document.querySelector('.elements');
-
 export class Card {
-  constructor (cardData, cardTemplate) {
+  constructor (cardData, cardTemplate, openImage) {
     this._cardTemplate = cardTemplate;
-    this._cardData = cardData;
+    this._cardName = cardData.name;
+    this._cardLink = cardData.link;
+    this._openImage = openImage;
   };
+
   //Создаём функцию слушателей карточек
-  _setCardListeners(item) {
-   //Находим лайки, картинки, текст карточек, корзину
-   const cardsImg = item.querySelector('.elements__image');
-   const cardsTxt = item.querySelector('.elements__text');
-   const cardsLike = item.querySelector('.elements__like');
-   const cardsDelete = item.querySelector('.elements__delete');
-   //Даём картинкам карточкек обработчики событий для открытия вспл. окна
-   cardsImg.addEventListener('click', function () {
-     openPopup(popupImage);
-     //Получаем ссылку на изображение
-     const imgAttribute = cardsImg.getAttribute('src');
-     //Получаем текст карточки, где выбрано изображение
-     const cardText = cardsTxt.textContent;
-     //Передаём в вспл.окно ссылку и alt на изобр.
-     imageOpen.setAttribute('src', imgAttribute);
-     imageOpen.setAttribute('alt', cardText);
-     //Передаём в вспл.окно текст
-     textOpen.textContent = cardText;
-   });
+  _setCardListeners() {
+    //Находим лайки, картинки, текст карточек, корзину
+    this._cardImg = this._cardClone.querySelector('.elements__image');
+    this._cardLike = this._cardClone.querySelector('.elements__like');
+    this._cardsDelete = this._cardClone.querySelector('.elements__delete');
+    //Даём картинкам карточкек обработчики событий для открытия вспл. окна
+    this._cardImg.addEventListener('click', () => this._openImage(this._cardClone));
 
-   //Добавляет обработчик события (удаление карточки) к корзине
-   cardsDelete.addEventListener('click', evt => evt.target.closest('.elements__element').remove());
+    //Добавляет обработчик события (удаление карточки) к корзине
+    this._cardsDelete.addEventListener('click', () => this.removeCard());
 
-   //Добавляет обработчик события (добавление класса при клике) к лайкам
-   cardsLike.addEventListener('click', evt => evt.target.classList.toggle('elements__like_active'));
- };
+    //Добавляет обработчик события (переключение класса при клике) к лайкам
+    this._cardLike.addEventListener('click', () => this.toggleLike());
+  };
+  //Переключение класса к лайкам
+  toggleLike() {
+    this._cardLike.classList.toggle('elements__like_active');
+  };
+  //удаление карточки
+  removeCard() {
+    this._cardClone.remove();
+    this._cardClone = null;
+  };
+
+  _getTemplate() {
+    this._cardClone =  this._cardTemplate.querySelector('.elements__element').cloneNode(true);
+  };
  //Создаём функцию сборки карточки
- _assembleCard(name, link) {
-   const cardClone = this._cardTemplate.querySelector('.elements__element').cloneNode(true);
-   const cardAbout = cardClone.querySelector('.elements__text');
-   const cardImage = cardClone.querySelector('.elements__image');
-   cardAbout.textContent = name;
-   cardImage.setAttribute('src', link);
-   cardImage.setAttribute('alt', name);
-   this._setCardListeners(cardClone);
-   return cardClone
- }
- addCards() {
-  if (Array.isArray(this._cardData)) {
-    this._cardData.forEach((data) => {
-      const name = data.name;
-      const link = data.link;
-      const card = this._assembleCard(name, link);
-      elementContainer.prepend(card);
-    });
-  } else {
-    const name = this._cardData.name;
-    const link = this._cardData.link;
-    const card = this._assembleCard(name, link);
-    elementContainer.prepend(card);
-  }
- }
+ assembleCard() {
+  //this._cardClone = this._cardTemplate.querySelector('.elements__element').cloneNode(true);
+  this._getTemplate();
+   const cardAbout = this._cardClone.querySelector('.elements__text');
+   const cardImage = this._cardClone.querySelector('.elements__image');
+   cardAbout.textContent = this._cardName;
+   cardImage.setAttribute('src', this._cardLink);
+   cardImage.setAttribute('alt', this._cardName);
+   this._setCardListeners(this._cardClone);
+   return this._cardClone
+ };
+
 }
