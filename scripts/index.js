@@ -1,7 +1,7 @@
 import {initialCards, validationConfig} from './indexData.js';
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
-
+import {Section, Popup , PopupWithImage, PopupWithForm, UserInfo} from './mod.js';
 // Находим область профиля  и карточек
 const sectionProfile = document.querySelector('.profile');
 const elementContainer = document.querySelector('.elements');
@@ -36,13 +36,52 @@ formProfileValidation.enableValidation();
 const formAddValidation = new FormValidator(validationConfig, popupAdd);
 formAddValidation.enableValidation();
 
-initialCards.forEach( item => addCard(item));
+const popupWithImage = new PopupWithImage(popupImage);
+popupWithImage.setEventListeners();
 
-function addCard(cardData) {
-    const newCard = new Card(cardData, cardTemplate, openImage);
-    const card = newCard.assembleCard();
-    elementContainer.prepend(card);
-  }
+const returnCard = (cardData) => {
+  const newCard = new Card(cardData, cardTemplate, ({ src, alt }) => {popupWithImage.open({ src, alt })});
+  const card = newCard.assembleCard();
+  return card
+};
+
+const handleSubmitAddCard = (newCard) => {
+  rendererCards.addItem(returnCard(newCard));
+};
+
+const handleSubmitUserInfo = (dataUserInfo) => {
+  userInfo.setUserInfo(dataUserInfo);
+};
+
+const rendererCards = new Section(
+  { items: initialCards,
+    renderer: returnCard
+  }, elementContainer);
+
+rendererCards.renderItems();
+
+const popupWithCardForm = new PopupWithForm(popupAdd, handleSubmitAddCard);
+popupWithCardForm.setEventListeners();
+const userInfo = new UserInfo(profileName, profileAbout);
+const popupWithUserForm = new PopupWithForm(popupEdit, handleSubmitUserInfo);
+popupWithUserForm.setEventListeners();
+
+const handlerAdd = () => {
+  formAddValidation.reloadValidation();
+  popupWithCardForm.open();
+}
+const handlerEdit = () => {
+  const userData = userInfo.getUserInfo();
+  nameInput.value = userData.name;
+  aboutInput.value = userData.about;
+  formProfileValidation.reloadValidation();
+  popupWithUserForm.open();
+}
+//Открываем формы
+buttonAdd.addEventListener('click', handlerAdd);
+buttonEdit.addEventListener('click', handlerEdit);
+/* //initialCards.forEach( item => addCard(item));
+
 
 //Закрываем формы
 function closePopup(popup) {
@@ -125,9 +164,6 @@ function handleFormSubmitAdd (evt) {
   closePopup(popupAdd);
 };
 
-//Открываем формы
-buttonEdit.addEventListener('click', openFormEdit);
-buttonAdd.addEventListener('click', openFormAdd);
 // Прикрепляем обработчики к формам:
 // он будет следить за событием “submit” - «отправка»
 formElementProfile.addEventListener('submit', handleFormSubmitEdit);
@@ -141,6 +177,6 @@ buttonsClose.forEach((element) => {
   element.addEventListener('click', close => closePopup(document.querySelector('.popup_opened')));
 });
 
-
+*/
 
 

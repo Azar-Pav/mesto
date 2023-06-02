@@ -13,7 +13,7 @@ export class Card {
     this._cardLike = this._cardClone.querySelector('.elements__like');
     this._cardsDelete = this._cardClone.querySelector('.elements__delete');
     //Даём картинкам карточкек обработчики событий для открытия вспл. окна
-    this._cardImg.addEventListener('click', () => this._openImage(this._cardClone));
+    this._cardImg.addEventListener('click', () => this._openImage({src: this._cardLink, alt: this._cardName}));
 
     //Добавляет обработчик события (удаление карточки) к корзине
     this._cardsDelete.addEventListener('click', () => this.removeCard());
@@ -36,8 +36,7 @@ export class Card {
   };
  //Создаём функцию сборки карточки
  assembleCard() {
-  //this._cardClone = this._cardTemplate.querySelector('.elements__element').cloneNode(true);
-  this._getTemplate();
+   this._getTemplate();
    const cardAbout = this._cardClone.querySelector('.elements__text');
    const cardImage = this._cardClone.querySelector('.elements__image');
    cardAbout.textContent = this._cardName;
