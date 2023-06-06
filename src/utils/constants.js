@@ -1,5 +1,5 @@
 //КАРТИНКИ
-const likeBlackImage = new URL('.../images/elements-like-black.svg', import.meta.url);
+const likeBlackImage = new URL('../images/elements-like-black.svg', import.meta.url);
 const likeImage = new URL('../images/elements-like.svg', import.meta.url);
 const trashImage = new URL('../images/elements-trash.svg', import.meta.url);
 const logoImage = new URL('../images/header-logo.svg', import.meta.url);
