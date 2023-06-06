@@ -1,5 +1,7 @@
+import './styles/index.css';
 //КОНСТАНТЫ
 import {
+  webpackImages,
   initialCards,
   validationConfig,
   elementContainer,

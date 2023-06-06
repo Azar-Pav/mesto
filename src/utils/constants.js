@@ -1,3 +1,24 @@
+//КАРТИНКИ
+const likeBlackImage = new URL('.../images/elements-like-black.svg', import.meta.url);
+const likeImage = new URL('../images/elements-like.svg', import.meta.url);
+const trashImage = new URL('../images/elements-trash.svg', import.meta.url);
+const logoImage = new URL('../images/header-logo.svg', import.meta.url);
+const closeImage = new URL('../images/popup-close-button.svg', import.meta.url);
+const addImage = new URL('../images/profile-add-button.svg', import.meta.url)
+const editImage = new URL('../images/profile-edit-button.svg', import.meta.url)
+const profileImage = new URL('../images/profile-avatar.jpg', import.meta.url)
+
+export const webpackImages = [
+  { name: 'Black Like Button', link: likeBlackImage },
+  { name: 'Like Button', link: likeImage },
+  { name: 'Trash Button', link: trashImage },
+  { name: 'Logo', link: logoImage },
+  { name: 'Close Button', link: closeImage },
+  { name: 'Add Button', link: addImage },
+  { name: 'Edit Button', link: editImage },
+  { name: 'Avatar', link: profileImage },
+];
+
 export const initialCards = [
   {
     name: 'Архыз',
