@@ -73,3 +73,11 @@ export const profileName = sectionProfile.querySelector('.profile__name');
 export const profileAbout = sectionProfile.querySelector('.profile__about');
 //Находим шаблон карточки
 export const cardTemplate = document.querySelector('#card').content;
+
+export const apiOptions = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
+  headers: {
+    authorization: 'fbe3a106-0f82-4218-b4b6-3d8c23a11f98',
+    'Content-Type': 'application/json'
+  }
+};
