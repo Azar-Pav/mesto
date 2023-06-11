@@ -45,8 +45,30 @@ const handleDeleteCard = (card, cardId) => {
       card.removeCard()
     })
     .catch((err) => {
+      console.log(err);
+    })
+}
+
+const handleLikeCard = (like, likeCount, card, cardId) => {
+  if (!like.classList.contains('elements__like_active')) {
+    api.putLike(cardId)
+    .then((res) => {
+      card.toggleLike();
+      likeCount.textContent = res.likes.length;
+    })
+    .catch((err) => {
       console.error(err);
     })
+  } else {
+    api.deleteLike(cardId)
+    .then((res) => {
+      card.toggleLike();
+      likeCount.textContent = res.likes.length;
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }
 }
 
 const returnCard = (cardData, userId) => {
@@ -55,8 +77,9 @@ const returnCard = (cardData, userId) => {
     cardTemplate,
     userId,
     ({ src, alt }) => {popupWithImage.open({ src, alt })},
-    (card, cardId) => {popupWithConfirm.open(card, cardId)}
-    );
+    (card, cardId) => {popupWithConfirm.open(card, cardId)},
+    handleLikeCard
+  );
   const card = newCard.assembleCard();
   return card
 };
@@ -72,7 +95,10 @@ const handleSubmitAddCard = (newCard) => {
 };
 
 const handleSubmitUserInfo = (dataUserInfo) => {
-  userInfo.setUserInfo(dataUserInfo);
+  api.patchUser(dataUserInfo)
+    .then((res) => {
+      userInfo.setUserInfo(dataUserInfo);
+    })
 };
 
 const handlerAdd = () => {
