@@ -1,9 +1,11 @@
 export class Card {
-  constructor ({ name, link }, cardTemplate, openImage, openConfirm) {
+  constructor ({ name, link , owner }, cardTemplate, userId, openImage, openConfirm) {
     this._cardTemplate = cardTemplate;
     this._cardName = name;
     this._cardLink = link;
     //this._cardId = _id;
+    this._userId = userId;
+    this._ownerId = owner._id;
     this._openImage = openImage;
     this._openConfirm = openConfirm;
   };
@@ -45,7 +47,14 @@ export class Card {
    cardImage.setAttribute('src', this._cardLink);
    cardImage.setAttribute('alt', this._cardName);
    this._setCardListeners(this._cardClone);
+   this.hiddenTrash();
    return this._cardClone
  };
 
+ hiddenTrash() {
+   if (this._ownerId != this._userId) {
+    this._cardsDelete = this._cardClone.querySelector('.elements__delete');
+    this._cardsDelete.remove();
+  }
+ }
 }

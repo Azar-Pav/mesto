@@ -28,21 +28,26 @@ import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api';
 
+let userId;
+
 const initialDataFromServer = () => {
   Promise.all([api.getInitialCards(), api.getUser()])
     .then((data) => {
-      rendererCards.renderItems(data[0]);
+      rendererCards.renderItems(data[0], data[1]._id);
       userInfo.setUserInfo(data[1]);
+      //userId = data[1]._id;
+      //console.log(userId);
     })
     .catch((err) => {
       console.error(err);
     })
 }
 
-const returnCard = (cardData) => {
+const returnCard = (cardData, userId) => {
   const newCard = new Card(
     cardData,
     cardTemplate,
+    userId,
     ({ src, alt }) => {popupWithImage.open({ src, alt })},
     (card) => {popupWithConfirm.open(card)}
     );

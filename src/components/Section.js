@@ -6,9 +6,9 @@ export class Section {
     this._container = containerSelector;
   }
 
-  renderItems(items) {
+  renderItems(items, userId) {
     items.forEach(item => {
-      const itemElement = this._renderer(item);
+      const itemElement = this._renderer(item, userId);
       this.addItem(itemElement);
     });
   }
