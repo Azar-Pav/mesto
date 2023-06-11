@@ -27,6 +27,16 @@ import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api';
 
 const api = new Api(apiOptions);
+const initialDataFromServer = () => {
+  Promise.all([api.getInitialCards(), api.getUser()])
+    .then((data) => {
+      rendererCards.renderItems(data[0]);
+      userInfo.setUserInfo(data[1]);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+}
 
 const returnCard = (cardData) => {
   const newCard = new Card(cardData, cardTemplate, ({ src, alt }) => {popupWithImage.open({ src, alt })});
@@ -56,7 +66,7 @@ const handlerEdit = () => {
   }
 
 const rendererCards = new Section(
-  { items: initialCards,
+  {
     renderer: returnCard
   }, elementContainer);
 
@@ -69,7 +79,7 @@ const userInfo = new UserInfo(profileName, profileAbout);
 const formProfileValidation = new FormValidator(validationConfig, popupEdit);
 const formAddValidation = new FormValidator(validationConfig, popupAdd);
 //Грузим карточки
-rendererCards.renderItems();
+initialDataFromServer();
 //Слушатели попапов
 popupWithImage.setEventListeners();
 popupWithCardForm.setEventListeners();

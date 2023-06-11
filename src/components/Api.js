@@ -8,24 +8,29 @@ export class Api {
 
   _resulting(res) {
     if (res.ok) {
-      return res.json();
-    }
+      return res.json()
+    } else {
 
-    return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(`Ошибка: ${res.status}`)
+    }
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   patchUser({ name, about }) {
@@ -34,7 +39,9 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({ name, about })
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   patchUserAvatar({ avatar }) {
@@ -43,7 +50,9 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({ avatar })
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   sendCard({ name, link }) {
@@ -52,7 +61,9 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({ name, link })
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   deleteCard(cardId) {
@@ -60,14 +71,18 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   getLikes(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   putLike(cardId) {
@@ -75,7 +90,9 @@ export class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
 
   deleteLike(cardId) {
@@ -83,7 +100,9 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(this._resulting(res));
+      .then((res) => {
+        return this._resulting(res)
+      });
   }
   /*
   GET https://nomoreparties.co/v1/cohort-68/users/me
