@@ -28,15 +28,21 @@ import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api';
 
-let userId;
-
 const initialDataFromServer = () => {
   Promise.all([api.getInitialCards(), api.getUser()])
     .then((data) => {
       rendererCards.renderItems(data[0], data[1]._id);
       userInfo.setUserInfo(data[1]);
-      //userId = data[1]._id;
-      //console.log(userId);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+}
+
+const handleDeleteCard = (card, cardId) => {
+  api.deleteCard(cardId)
+    .then((res) => {
+      card.removeCard()
     })
     .catch((err) => {
       console.error(err);
@@ -49,14 +55,20 @@ const returnCard = (cardData, userId) => {
     cardTemplate,
     userId,
     ({ src, alt }) => {popupWithImage.open({ src, alt })},
-    (card) => {popupWithConfirm.open(card)}
+    (card, cardId) => {popupWithConfirm.open(card, cardId)}
     );
   const card = newCard.assembleCard();
   return card
 };
 
 const handleSubmitAddCard = (newCard) => {
-  rendererCards.addItem(returnCard(newCard));
+  api.sendCard(newCard)
+    .then((res) => {
+      rendererCards.addItem(returnCard(newCard));
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 };
 
 const handleSubmitUserInfo = (dataUserInfo) => {
@@ -83,7 +95,7 @@ const rendererCards = new Section(
   }, elementContainer);
 
 //Попапы
-const popupWithConfirm = new PopupWithConfirm(popupConfirm);
+const popupWithConfirm = new PopupWithConfirm(popupConfirm, handleDeleteCard);
 const popupWithImage = new PopupWithImage(popupImage);
 const popupWithCardForm = new PopupWithForm(popupAdd, handleSubmitAddCard);
 const popupWithUserForm = new PopupWithForm(popupEdit, handleSubmitUserInfo);

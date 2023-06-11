@@ -1,11 +1,15 @@
 export class Card {
-  constructor ({ name, link , owner }, cardTemplate, userId, openImage, openConfirm) {
+  constructor ({ name, link, _id, owner }, cardTemplate, userId, openImage, openConfirm) {
     this._cardTemplate = cardTemplate;
     this._cardName = name;
     this._cardLink = link;
-    //this._cardId = _id;
+    if (_id) {
+      this._cardId = _id
+    }
     this._userId = userId;
-    this._ownerId = owner._id;
+    if (owner) {
+      this._ownerId = owner._id;
+    }
     this._openImage = openImage;
     this._openConfirm = openConfirm;
   };
@@ -20,7 +24,7 @@ export class Card {
     this._cardImg.addEventListener('click', () => this._openImage({src: this._cardLink, alt: this._cardName}));
 
     //Добавляет обработчик события (удаление карточки) к корзине
-    this._cardsDelete.addEventListener('click', () => this._openConfirm(this));
+    this._cardsDelete.addEventListener('click', () => this._openConfirm(this, this._cardId));
 
     //Добавляет обработчик события (переключение класса при клике) к лайкам
     this._cardLike.addEventListener('click', () => this.toggleLike());
@@ -47,11 +51,11 @@ export class Card {
    cardImage.setAttribute('src', this._cardLink);
    cardImage.setAttribute('alt', this._cardName);
    this._setCardListeners(this._cardClone);
-   this.hiddenTrash();
+   this._hiddenTrash();
    return this._cardClone
  };
 
- hiddenTrash() {
+ _hiddenTrash() {
    if (this._ownerId != this._userId) {
     this._cardsDelete = this._cardClone.querySelector('.elements__delete');
     this._cardsDelete.remove();
