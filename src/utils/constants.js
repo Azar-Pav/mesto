@@ -62,6 +62,7 @@ export const elementContainer = document.querySelector('.elements');
 export const popupEdit = document.querySelector('.popup_type-js_edit');
 export const popupAdd = document.querySelector('.popup_type-js_add');
 export const popupImage = document.querySelector('.popup_type-js_image');
+export const popupConfirm = document.querySelector('.popup_type-js_confirm');
 // Находим кнопки редактирования и добавлния в профиле и закрытия в форме
 export const buttonEdit = sectionProfile.querySelector('.profile__edit-button');
 export const buttonAdd = sectionProfile.querySelector('.profile__add-button');

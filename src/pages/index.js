@@ -8,6 +8,7 @@ import {
   popupEdit,
   popupAdd,
   popupImage,
+  popupConfirm,
   buttonEdit,
   buttonAdd,
   profileName,
@@ -21,12 +22,12 @@ import {
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirm } from '../components/PopupWithConfirm';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api';
 
-const api = new Api(apiOptions);
 const initialDataFromServer = () => {
   Promise.all([api.getInitialCards(), api.getUser()])
     .then((data) => {
@@ -39,7 +40,12 @@ const initialDataFromServer = () => {
 }
 
 const returnCard = (cardData) => {
-  const newCard = new Card(cardData, cardTemplate, ({ src, alt }) => {popupWithImage.open({ src, alt })});
+  const newCard = new Card(
+    cardData,
+    cardTemplate,
+    ({ src, alt }) => {popupWithImage.open({ src, alt })},
+    (card) => {popupWithConfirm.open(card)}
+    );
   const card = newCard.assembleCard();
   return card
 };
@@ -65,12 +71,14 @@ const handlerEdit = () => {
     popupWithUserForm.open();
   }
 
+const api = new Api(apiOptions);
 const rendererCards = new Section(
   {
     renderer: returnCard
   }, elementContainer);
 
 //Попапы
+const popupWithConfirm = new PopupWithConfirm(popupConfirm);
 const popupWithImage = new PopupWithImage(popupImage);
 const popupWithCardForm = new PopupWithForm(popupAdd, handleSubmitAddCard);
 const popupWithUserForm = new PopupWithForm(popupEdit, handleSubmitUserInfo);
@@ -81,6 +89,7 @@ const formAddValidation = new FormValidator(validationConfig, popupAdd);
 //Грузим карточки
 initialDataFromServer();
 //Слушатели попапов
+popupWithConfirm.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithCardForm.setEventListeners();
 popupWithUserForm.setEventListeners();

@@ -1,9 +1,11 @@
 export class Card {
-  constructor (cardData, cardTemplate, openImage) {
+  constructor ({ name, link }, cardTemplate, openImage, openConfirm) {
     this._cardTemplate = cardTemplate;
-    this._cardName = cardData.name;
-    this._cardLink = cardData.link;
+    this._cardName = name;
+    this._cardLink = link;
+    //this._cardId = _id;
     this._openImage = openImage;
+    this._openConfirm = openConfirm;
   };
 
   //Создаём функцию слушателей карточек
@@ -16,7 +18,7 @@ export class Card {
     this._cardImg.addEventListener('click', () => this._openImage({src: this._cardLink, alt: this._cardName}));
 
     //Добавляет обработчик события (удаление карточки) к корзине
-    this._cardsDelete.addEventListener('click', () => this.removeCard());
+    this._cardsDelete.addEventListener('click', () => this._openConfirm(this));
 
     //Добавляет обработчик события (переключение класса при клике) к лайкам
     this._cardLike.addEventListener('click', () => this.toggleLike());
