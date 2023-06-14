@@ -1,17 +1,18 @@
 import { Popup } from "./Popup.js";
 //отвечает за открытие и закрытие попапа картинки
 export class PopupWithConfirm extends Popup {
-  constructor(popupImageSelector, submitHandler) {
-    super(popupImageSelector);
+  constructor(popupConfirmElement, submitHandler) {
+    super(popupConfirmElement);
     this._submitHandler = submitHandler;
+    this._submitButton = this._popup.querySelector('.popup__save-button');
+    this._initialSubmitText = this._submitButton.textContent;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._popupElement.addEventListener('submit', (evt) => {
+    this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitHandler(this._card, this._cardId);
-      this.close();
     });
   }
 
@@ -19,5 +20,13 @@ export class PopupWithConfirm extends Popup {
     super.open();
     this._card = card;
     this._cardId = cardId;
+  }
+
+  saving(loading) {
+    if (loading) {
+      this._submitButton.textContent = 'Сохранение...';
+    } else {
+      this._submitButton.textContent = this._initialSubmitText;
+    }
   }
 }

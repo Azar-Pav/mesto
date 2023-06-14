@@ -43,16 +43,6 @@ const initialDataFromServer = () => {
     })
 }
 
-const handleDeleteCard = (card, cardId) => {
-  api.deleteCard(cardId)
-    .then((res) => {
-      card.removeCard()
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}
-
 const handleLikeCard = (like, likeCount, card, cardId) => {
   if (!like.classList.contains('elements__like_active')) {
     api.putLike(cardId)
@@ -83,39 +73,69 @@ const returnCard = (cardData, userId) => {
     ({ src, alt }) => {popupWithImage.open({ src, alt })},
     (card, cardId) => {popupWithConfirm.open(card, cardId)},
     handleLikeCard
-  );
-  const card = newCard.assembleCard();
-  return card
+    );
+    const card = newCard.assembleCard();
+    return card
 };
 
+const handleDeleteCard = (card, cardId) => {
+  popupWithConfirm.saving(true);
+  api.deleteCard(cardId)
+  .then((res) => {
+    card.removeCard()
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    popupWithConfirm.saving(false);
+    popupWithConfirm.close();
+  });
+}
+
 const handleSubmitAddCard = (newCard) => {
+  popupWithCardForm.saving(true);
   api.sendCard(newCard)
-    .then((res) => {
-      rendererCards.addItem(returnCard(newCard));
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+  .then((res) => {
+    rendererCards.addItem(returnCard(newCard));
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    popupWithCardForm.saving(false);
+    popupWithCardForm.close();
+  });
 };
 
 const handleSubmitUserInfo = (dataUserInfo) => {
+  popupWithUserForm.saving(true);
   api.patchUser(dataUserInfo)
-    .then((res) => {
-      userInfo.setUserInfo(dataUserInfo);
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+  .then((res) => {
+    userInfo.setUserInfo(dataUserInfo);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    popupWithUserForm.saving(false);
+    popupWithUserForm.close();
+  });
 };
 
 const handleSubmitUserAvatar = (dataUserInfo) => {
+  popupWithUserAvaForm.saving(true);
   api.patchUserAvatar(dataUserInfo)
-    .then((res) => {
-      userInfo.setUserAvatar(dataUserInfo);
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+  .then((res) => {
+    userInfo.setUserAvatar(dataUserInfo);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    popupWithUserAvaForm.saving(false);
+    popupWithUserAvaForm.close();
+  });
 };
 
 const handlerAdd = () => {

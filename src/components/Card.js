@@ -9,8 +9,10 @@ export class Card {
     this._cardTemplate = cardTemplate;
     this._cardName = name;
     this._cardLink = link;
-    this._cardLikes = likes.length;
-    this._cardLikers = likes;
+    if (likes) {
+      this._cardLikes = likes.length;
+      this._cardLikers = likes;
+    }
     if (_id) {
       this._cardId = _id
     }
@@ -74,16 +76,18 @@ export class Card {
    likeCounter.textContent = this._cardLikes;
    this._setCardListeners(this._cardClone);
    this._hiddenTrash();
-   this._visibleLike()
+   this._visibleLike();
    return this._cardClone
  };
 
  _visibleLike() {
-  this._cardLikers.forEach( (liker) => {
-    if (liker._id === this._userId) {
-      this.toggleLike();
-    }
-  })
+  if (this._cardLikers) {
+    this._cardLikers.forEach( (liker) => {
+      if (liker._id === this._userId) {
+        this.toggleLike();
+      }
+    })
+  }
 }
  _hiddenTrash() {
    if (this._ownerId != this._userId) {

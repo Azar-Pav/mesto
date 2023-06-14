@@ -1,11 +1,13 @@
 import { Popup } from "./Popup.js";
 //отвечает за открытие и закрытие формы
 export class PopupWithForm extends Popup {
-  constructor(popupFormSelector, submitHandler) {
-    super(popupFormSelector);
+  constructor(popupFormElement, submitHandler) {
+    super(popupFormElement);
     this._submitHandler = submitHandler;
-    this._formElement = this._popupElement.querySelector('.popup__edit-form');
-    this._inputs = Array.from(this._popupElement.querySelectorAll('.popup__text-field'));
+    this._formElement = this._popup.querySelector('.popup__edit-form');
+    this._inputs = Array.from(this._popup.querySelectorAll('.popup__text-field'));
+    this._submitButton = this._popup.querySelector('.popup__save-button');
+    this._initialSubmitText = this._submitButton.textContent;
   }
 
   _getInputValues() {
@@ -18,15 +20,22 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._popupElement.addEventListener('submit', (evt) => {
+    this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitHandler(this._getInputValues());
-      this.close();
     });
   }
 
   close() {
     super.close();
     this._formElement.reset();
+  }
+
+  saving(loading) {
+    if (loading) {
+      this._submitButton.textContent = 'Сохранение...';
+    } else {
+      this._submitButton.textContent = this._initialSubmitText;
+    }
   }
 }
