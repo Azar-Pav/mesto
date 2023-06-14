@@ -6,11 +6,14 @@ import {
   validationConfig,
   elementContainer,
   popupEdit,
+  popupEditAvatar,
   popupAdd,
   popupImage,
   popupConfirm,
+  buttonEditAvatar,
   buttonEdit,
   buttonAdd,
+  profileAvatar,
   profileName,
   profileAbout,
   nameInput,
@@ -33,6 +36,7 @@ const initialDataFromServer = () => {
     .then((data) => {
       rendererCards.renderItems(data[0], data[1]._id);
       userInfo.setUserInfo(data[1]);
+      userInfo.setUserAvatar(data[1]);
     })
     .catch((err) => {
       console.error(err);
@@ -99,20 +103,38 @@ const handleSubmitUserInfo = (dataUserInfo) => {
     .then((res) => {
       userInfo.setUserInfo(dataUserInfo);
     })
+    .catch((err) => {
+      console.error(err);
+    })
+};
+
+const handleSubmitUserAvatar = (dataUserInfo) => {
+  api.patchUserAvatar(dataUserInfo)
+    .then((res) => {
+      userInfo.setUserAvatar(dataUserInfo);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
 };
 
 const handlerAdd = () => {
-    formAddValidation.reloadValidation();
-    popupWithCardForm.open();
-  }
+  formAddValidation.reloadValidation();
+  popupWithCardForm.open();
+}
 
 const handlerEdit = () => {
-    const userData = userInfo.getUserInfo();
-    nameInput.value = userData.name;
-    aboutInput.value = userData.about;
-    formProfileValidation.reloadValidation();
-    popupWithUserForm.open();
-  }
+  const userData = userInfo.getUserInfo();
+  nameInput.value = userData.name;
+  aboutInput.value = userData.about;
+  formProfileValidation.reloadValidation();
+  popupWithUserForm.open();
+}
+
+const handlerEditAvatar = () => {
+  formAvatarValidation.reloadValidation();
+  popupWithUserAvaForm.open();
+}
 
 const api = new Api(apiOptions);
 const rendererCards = new Section(
@@ -125,8 +147,10 @@ const popupWithConfirm = new PopupWithConfirm(popupConfirm, handleDeleteCard);
 const popupWithImage = new PopupWithImage(popupImage);
 const popupWithCardForm = new PopupWithForm(popupAdd, handleSubmitAddCard);
 const popupWithUserForm = new PopupWithForm(popupEdit, handleSubmitUserInfo);
-const userInfo = new UserInfo(profileName, profileAbout);
+const popupWithUserAvaForm = new PopupWithForm(popupEditAvatar, handleSubmitUserAvatar);
+const userInfo = new UserInfo(profileName, profileAbout, profileAvatar);
 //Валидация
+const formAvatarValidation = new FormValidator(validationConfig, popupEditAvatar);
 const formProfileValidation = new FormValidator(validationConfig, popupEdit);
 const formAddValidation = new FormValidator(validationConfig, popupAdd);
 //Грузим карточки
@@ -136,12 +160,15 @@ popupWithConfirm.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithCardForm.setEventListeners();
 popupWithUserForm.setEventListeners();
+popupWithUserAvaForm.setEventListeners();
 //Включаем валидацию
+formAvatarValidation.enableValidation();
 formProfileValidation.enableValidation();
 formAddValidation.enableValidation();
 //Открываем формы
-buttonAdd.addEventListener('click', handlerAdd);
+buttonEditAvatar.addEventListener('click', handlerEditAvatar);
 buttonEdit.addEventListener('click', handlerEdit);
+buttonAdd.addEventListener('click', handlerAdd);
 
 
 

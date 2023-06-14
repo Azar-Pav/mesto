@@ -76,15 +76,6 @@ export class Api {
       });
   }
 
-  getLikes(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      headers: this._headers
-    })
-      .then((res) => {
-        return this._resulting(res)
-      });
-  }
-
   putLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
