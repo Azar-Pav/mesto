@@ -1,19 +1,22 @@
 //отвечает за отрисовку элементов на странице
 export class Section {
-  constructor({ renderer }, containerSelector) {
-    //this._items = items;
-    this._renderer = renderer;
+  constructor(containerSelector) {
     this._container = containerSelector;
   }
 
-  renderItems(items, userId) {
+  renderItemsAppend(items, renderer) {
+    this._renderer = renderer;
     items.forEach(item => {
-      const itemElement = this._renderer(item, userId);
-      this.addItem(itemElement);
+      const itemElement = this._renderer(item);
+      this.appendItem(itemElement);
     });
   }
 
-  addItem(element) {
+  appendItem(element) {
+    this._container.append(element);
+  }
+
+  prependitem(element) {
     this._container.prepend(element);
   }
 }

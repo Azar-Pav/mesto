@@ -21,35 +21,7 @@ export const webpackImages = [
   { name: 'Avatar', link: profileImage },
 ];
 
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 export const validationConfig = {
-  formSelector: '.popup__edit-form',
   inputSelector: '.popup__text-field',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
@@ -59,7 +31,7 @@ export const validationConfig = {
 };
 // Находим область профиля  и карточек
 const sectionProfile = document.querySelector('.profile');
-export const elementContainer = document.querySelector('.elements');
+export const cardsContainer = document.querySelector('.elements');
 // Находим вспл.окна
 export const popupEdit = document.querySelector('.popup_type-js_edit');
 export const popupEditAvatar = document.querySelector('.popup_type-js_ava');
@@ -80,6 +52,7 @@ export const profileAbout = sectionProfile.querySelector('.profile__about');
 //Находим шаблон карточки
 export const cardTemplate = document.querySelector('#card').content;
 
+export const userId = 'b93ef50c33df209627eb7141';
 export const apiOptions = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
   headers: {

@@ -29,4 +29,10 @@
 
 * [Ссылка на проект в github.io](https://azar-pav.github.io/mesto/)
 
+## Планы по доработке
+
+[] улучшить подтверждение удаления, сделав PopupConfirm и handleDeleteCard универсальными (в конструкторе PopupConfirm убрать колбэк, сделав его методом класса)
+[] улучшить Card, создав публичный метод getId
+[] улучшить [комментарии](https://jsdoc.app/about-getting-started.html)
+
 

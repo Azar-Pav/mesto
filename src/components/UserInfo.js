@@ -1,25 +1,29 @@
 // отвечает за управление отображением информации о пользователе на странице
 export class UserInfo {
-  constructor(nameSelector, infoSelector, avatarSelector) {
-    this._avatarElement = avatarSelector;
-    this._nameElement = nameSelector;
-    this._aboutElement = infoSelector;
+  constructor(nameElement, infoElement, avatarElement) {
+    this._avatar = avatarElement;
+    this._name = nameElement;
+    this._about = infoElement;
   }
 
   getUserInfo() {
     return {
-      name: this._nameElement.textContent,
-      about: this._aboutElement.textContent
+      name: this._name.textContent,
+      about: this._about.textContent,
+      avatar: this._avatar.src
     };
   }
 
   setUserInfo({ name, about, avatar }) {
-    this._avatarElement.src = avatar;
-    this._nameElement.textContent = name;
-    this._aboutElement.textContent = about;
+    if (avatar) {
+      this._avatar.src = avatar;
+    }
+    if (name) {
+      this._name.textContent = name;
+    }
+    if (about) {
+      this._about.textContent = about;
+    }
   }
 
-  setUserAvatar({ avatar }) {
-    this._avatarElement.src = avatar;
-  }
 }

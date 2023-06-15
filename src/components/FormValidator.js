@@ -1,26 +1,36 @@
 export class FormValidator {
-  constructor(config, popupFormSelector) {
-    this._formSelector = config.formSelector;
-    this._inputSelector = config.inputSelector;
-    this._submitButtonSelector = config.submitButtonSelector;
-    this._inactiveButtonClass = config.inactiveButtonClass;
-    this._inputErrorClass = config.inputErrorClass;
-    this._errorClass = config.errorClass;
-    this._error = config.error;
-    this._formElement = popupFormSelector;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+  constructor(
+    {
+      inputSelector,
+      submitButtonSelector,
+      inactiveButtonClass,
+      inputErrorClass,
+      errorClass,
+      error
+    },
+    popupFormElement
+  )
+  {
+    this._inputSelector = inputSelector;
+    this._submitButtonSelector = submitButtonSelector;
+    this._inactiveButtonClass = inactiveButtonClass;
+    this._inputErrorClass = inputErrorClass;
+    this._errorClass = errorClass;
+    this._error = error;
+    this._form = popupFormElement;
+    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
   };
   //Показываем ошибку
   _showInputError = (inputElement, errorMessage) => {
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}${this._error}`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}${this._error}`);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   };
   //Скрываем ошибку
   _hideInputError = (inputElement) => {
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}${this._error}`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}${this._error}`);
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = '';
