@@ -31,8 +31,8 @@
 
 ## Планы по доработке
 
-[] улучшить подтверждение удаления, сделав PopupConfirm и handleDeleteCard универсальными (в конструкторе PopupConfirm убрать колбэк, сделав его методом класса)
-[] улучшить Card, создав публичный метод getId
-[] улучшить [комментарии](https://jsdoc.app/about-getting-started.html)
+- [ ] улучшить подтверждение удаления, сделав PopupConfirm и handleDeleteCard универсальными (в конструкторе PopupConfirm убрать колбэк, сделав его методом класса)
+- [ ] улучшить Card, создав публичный метод getId
+- [ ] улучшить [комментарии](https://jsdoc.app/about-getting-started.html)
 
 
