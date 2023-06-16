@@ -31,11 +31,15 @@ export class PopupWithForm extends Popup {
     this._formElement.reset();
   }
 
+  resetSubmitButtonText() {
+    this._submitButton.textContent = this._initialSubmitText;
+  }
+
   setSubmitButtonText(text) {
     if (text) {
       this._submitButton.textContent = text;
     } else {
-      this._submitButton.textContent = this._initialSubmitText;
+      this.resetSubmitButtonText();
     }
   }
 }

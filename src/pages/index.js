@@ -18,7 +18,6 @@ import {
   nameInput,
   aboutInput,
   cardTemplate,
-  userId,
   apiOptions
 } from '../utils/constants.js';
 //КОМПОНЕНТЫ/МОДУЛИ/КЛАССЫ
@@ -31,10 +30,13 @@ import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api';
 
+let userId;
+
 const getInitialDataFromServer = () => {
-  Promise.all([api.getInitialCards(), api.getUser()])
+  Promise.all([ api.getInitialCards(), api.getUser() ])
     .then(([ cardsData, userData ]) => {
-      cardsSection.renderItemsAppend(cardsData, createCard);
+      userId = userData._id;
+      cardsSection.renderItemsAppend(cardsData);
       userInfo.setUserInfo(userData);
     })
     .catch((err) => {
@@ -96,7 +98,7 @@ const handleSubmitAddCard = (newCard) => {
   popupWithCardForm.setSubmitButtonText('Добавление...');
   api.sendCard(newCard)
   .then((res) => {
-    cardsSection.prependitem(createCard(res, userId));
+    cardsSection.prependItem(createCard(res));
     popupWithCardForm.close();
   })
   .catch((err) => {
@@ -156,7 +158,13 @@ const openPopupEditAvatar = () => {
 }
 
 const api = new Api(apiOptions);
-const cardsSection = new Section(cardsContainer);
+const cardsSection = new Section(
+  {
+    renderer: (item) => {
+      cardsSection.appendItem(createCard(item))
+    }
+  },
+  cardsContainer);
 
 //Попапы
 const popupWithConfirm = new PopupWithConfirm(popupConfirm, handleDeleteCard);

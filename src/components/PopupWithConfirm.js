@@ -22,11 +22,15 @@ export class PopupWithConfirm extends Popup {
     this._cardId = cardId;
   }
 
+  resetSubmitButtonText() {
+    this._submitButton.textContent = this._initialSubmitText;
+  }
+
   setSubmitButtonText(text) {
     if (text) {
       this._submitButton.textContent = text;
     } else {
-      this._submitButton.textContent = this._initialSubmitText;
+      this.resetSubmitButtonText();
     }
   }
 }
